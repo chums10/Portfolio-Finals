@@ -1,0 +1,669 @@
+.section-card { display: none; }
+#home-card { display: block; }
+
+.home-btn {
+    position: fixed;
+    right: 18px;
+    bottom: 18px; /* put it back in the corner */
+    z-index: 40;
+    transition: transform 0.18s ease, bottom 0.18s ease;
+}
+
+/* when a home button is placed inside a card, position it inside the card (bottom-right) */
+.main-card .home-btn.in-card {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;   /* placed inside the card near the lower-right corner */
+    top: auto;
+    z-index: 30;
+    transform: none;
+}
+
+/* ensure the FAQ card content leaves room for the in-card button so it doesn't cover the last QA */
+#faq-card .card-content {
+    position: relative;
+    padding-bottom: 120px; /* adjust if you want more/less gap */
+}
+
+/* responsive tweak: more space on small screens so button never overlaps answers */
+@media (max-width: 520px) {
+  #faq-card .card-content {
+    padding-bottom: 160px;
+  }
+  .main-card .home-btn.in-card {
+    right: 10px;
+    bottom: 10px;
+  }
+}
+
+.socials-row {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+}
+.social-icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    color: #353333;
+    background: none;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.social-icon:hover {
+    background: #e0e0e0;
+}
+body.dark-mode .social-icon {
+    color: #bdbdf7;
+}
+body.dark-mode .social-icon:hover {
+    background: #23233a;
+}
+
+.faq-list { display: grid; gap: 1rem; }
+.faq-item { background: #fff9d6; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(0,0,0,0.05); }
+.faq-q{
+    width:100%;
+    text-align: left;
+    padding: 1rem 1.25rem;
+    background: transparent;
+    border: none;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.95rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+}
+.faq-q:focus{ outline: 2px solid rgba(43,124,255,0.25); }
+.faq-arrow{
+    transition: transform 0.25s ease;
+    font-size:1.05rem;
+    margin-left: 1rem;
+}
+.faq-a{
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1.25rem;
+    background: transparent;
+    transition: max-height 0.33s ease, padding 0.25s ease;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    line-height:1.6;
+    color:#222;
+}
+.faq-item.open .faq-a{
+    padding: 0.75rem 1.25rem 1.25rem;
+    max-height: 300px; /* large enough to accommodate the content */
+}
+.faq-item.open .faq-arrow{ transform: rotate(180deg); }
+/* keep the triangle visually on the right even if text wraps */
+.faq-q .faq-arrow { margin-left: auto; }
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+    justify-content: center;
+}
+.form-row label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1rem;
+    color: #222;
+    min-width: 110px;
+    text-align: right;
+}
+.contact-form input,
+.contact-form textarea {
+    background: #fff8b0;
+    border: none;
+    border-radius: 0.1rem;
+    padding: 0.7rem 1rem;
+    font-size: 1.1rem;
+    font-family: Arial, sans-serif;
+    width: 300px;
+    resize: none;
+}
+.contact-form textarea {
+    min-height: 70px;
+}
+.send-btn {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1rem;
+    background: #fff8b0;
+    border: none;
+    border-radius: 0.1rem;
+    padding: 0.7rem 2.5rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    color: #222;
+    transition: background 0.2s;
+}
+.send-btn:hover {
+    background: #ffe066;
+}
+body.dark-mode .contact-form input,
+body.dark-mode .contact-form textarea {
+    background: #0d3c7a;
+    color: #bdbdf7;
+}
+body.dark-mode .send-btn {
+    background: #0d3c7a;
+    color: #bdbdf7;
+}
+body.dark-mode .send-btn:hover {
+    background: #1a4a8a;
+}
+body.dark-mode .form-row label {
+    color: #bdbdf7;
+}
+
+.main-card { position: relative; }
+
+body {
+    margin: 0;
+    font-family: 'Press Start 2P', 'Segoe UI', Arial, sans-serif;
+    background: #fcfaea;
+    color: #222;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+    position: relative;
+}
+
+.corner-toggle {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 10;
+}
+.corner-toggle .icon {
+    font-size: 2rem;
+    cursor: pointer;
+    margin-bottom: 0.2rem;
+}
+.corner-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1rem;
+    color: #444;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.wavy-bg {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 200px;
+    background: radial-gradient(ellipse at left bottom, #7eb3e6 80%, transparent 100%);
+    z-index: 1;
+}
+
+main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.main-card {
+    width: 92%;
+    max-width: 1100px; /* increase this to allow wider cards */
+    margin: 36px auto;
+    border-radius: 6px;
+    background: #fffaf0; /* keep your card background color (override if different) */
+    box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: visible;
+}
+
+/* slightly tighter on medium screens */
+@media (max-width: 1100px) {
+  .main-card { width: 94%; max-width: 920px; margin: 30px auto; }
+}
+
+/* keep mobile comfortable */
+@media (max-width: 720px) {
+  .main-card { width: 96%; max-width: 720px; margin: 20px auto; }
+}
+
+@media (max-width: 420px) {
+  .main-card { width: 98%; max-width: 420px; margin: 14px auto; }
+}
+
+.card-topbar {
+    background: #353333;
+    color: #fff;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.1rem;
+    padding: 1rem 1.5rem 0.7rem 1.5rem;
+    border-bottom: 2px solid #bdbdbd;
+    letter-spacing: 1px;
+    text-align: left;
+}
+.card-content {
+    padding: 2.5rem 2rem 2.5rem 2rem;
+    text-align: center;
+}
+
+.pixel-hi {
+    font-family: 'Press Start 2P', monospace;
+    color: #222;
+    font-size: 1.2rem;
+}
+.pixel-name {
+    font-family: 'Press Start 2P', monospace;
+    color: #ffd600;
+    font-size: 1.2rem;
+}
+.subtitle {
+    font-family: Arial, sans-serif;
+    font-size: 1.1rem;
+    color: #222;
+    margin: 1.5rem 0 2.5rem 0;
+}
+
+.nav-icons {
+    display: flex;
+    justify-content: center;
+    gap: 3.5rem;
+    margin-top: 1.5rem;
+}
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.nav-icon {
+    width: 56px;
+    height: 56px;
+    border: 2px solid #222;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin-bottom: 0.7rem;
+    background: none;
+}
+.nav-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    color: #222;
+    margin-top: 0.2rem;
+}
+
+.main-card {
+    box-shadow: 3px 5px 10px 0 rgba(0,0,0,0.18);
+    border: 1px solid #444;
+}
+
+/* toast / message-sent popup */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(43,124,255,0.95);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  opacity: 0;
+  transition: opacity .22s ease, transform .22s ease;
+  z-index: 9999;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* DARK MODE */
+body.dark-mode {
+    background: #23232d;
+    color: #e0e0f0;
+}
+body.dark-mode .main-card {
+    background: #23233a;
+    border-color: #bdbdbd;
+}
+body.dark-mode .card-topbar {
+    background: #353333;
+    color: #bdbdf7;
+    border-bottom: 2px solid #444;
+}
+body.dark-mode .pixel-hi, body.dark-mode .nav-label {
+    color: #bdbdf7;
+}
+body.dark-mode .pixel-name {
+    color: #bdbdf7;
+}
+body.dark-mode .nav-icon {
+    border-color: #bdbdf7;
+    color: #bdbdf7;
+}
+body.dark-mode .subtitle {
+    color: #bdbdf7;
+}
+body.dark-mode .corner-name {
+    color: #bdbdf7;
+}
+.dark-mode .wavy-bg {
+    background: radial-gradient(ellipse at left bottom, #1a4a8a 80%, transparent 100%);
+}
+
+/* About card styling: larger serif text, comfortable measure and spacing */
+#about-card .about-text{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.35rem;
+    line-height: 1.95;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 28px 24px;
+    text-align: left;
+    color: #111;
+}
+
+/* keep the in-card home button inside the card lower-right */
+#about-card .home-btn.in-card{
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 30;
+}
+
+/* ensure the content clears the in-card button */
+#about-card .card-content{
+    position: relative;
+    padding-bottom: 120px;
+}
+
+/* responsive tweak for smaller screens */
+@media (max-width: 640px){
+  #about-card .about-text{
+    font-size: 1.05rem;
+    line-height: 1.8;
+    padding: 22px 18px;
+  }
+  #about-card .card-content{
+    padding-bottom: 140px;
+  }
+}
+
+/* Links card: text and list styled similarly to About for consistency */
+#links-card .links-text,
+#contact-card .contact-intro {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 920px;
+    margin: 0 auto 1.25rem auto;
+    padding: 0 18px;
+    text-align: left;
+    color: #111;
+}
+
+/* links list */
+#links-card .links-list{
+    display:flex;
+    flex-direction:column;
+    gap: 0.9rem;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 18px 20px 18px;
+}
+#links-card .link-item{
+    display:block;
+    padding: 18px 20px;
+    border-radius: 8px;
+    background: #fff8d6;
+    color: #111;
+    text-decoration: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.05rem;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+#links-card .link-item:hover{
+    background:#fff2b8;
+}
+
+/* Contact form adjustments to match card spacing */
+#contact-card .contact-form {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 18px 10px 18px;
+    align-items: stretch;
+}
+#contact-card .form-row {
+    justify-content: flex-start;
+}
+#contact-card .contact-form input,
+#contact-card .contact-form textarea {
+    width: calc(100% - 140px);
+}
+
+/* keep the in-card home button inside these cards and ensure content clears it */
+#links-card .home-btn.in-card,
+#contact-card .home-btn.in-card {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 30;
+}
+#links-card .card-content,
+#contact-card .card-content {
+    position: relative;
+    padding-bottom: 120px; /* room for the in-card button */
+}
+
+/* Links card — large centered social icons like the screenshot */
+#links-card .socials-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.15rem;
+  text-align: center;
+  color: #111;
+  margin-top: 48px;
+}
+
+#links-card .socials-row{
+  display: flex;
+  justify-content: center;
+  gap: 5.5rem;
+  margin-top: 48px;
+  margin-bottom: 28px;
+  align-items: center;
+}
+
+/* simple icon links (remove dark circular background) */
+#links-card .social-link{
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #2f2f2f; /* icon color */
+  font-size: 64px; /* adjust size to match your layout */
+  text-decoration: none;
+  box-shadow: none;
+  transition: transform .12s ease, color .12s ease;
+  border: none;
+  padding: 0;
+}
+#links-card .social-link:hover{
+  transform: translateY(-6px);
+  color: #2b7cff; /* hover accent color */
+}
+
+/* responsive: scale icons down on small screens */
+@media (max-width: 640px) {
+  #links-card .social-link { font-size: 46px; }
+  #links-card .socials-row { gap: 2.8rem; margin-top: 30px; }
+}
+
+@media (max-width: 700px) {
+    .main-card {
+        width: 98vw;
+        margin: 1.5rem 0;
+    }
+    .card-content {
+        padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    }
+    .nav-icons {
+        gap: 1.2rem;
+    }
+}
+
+header {
+    padding: 2rem 1rem 1rem 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.mode-toggle {
+    position: absolute;
+    left: 1rem;
+    top: 1.5rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon {
+    user-select: none;
+    transition: opacity 0.2s;
+}
+
+h1 {
+    margin: 0.5rem 0 0.2rem 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+section {
+    margin-bottom: 2.5rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.5rem;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem 0 1rem 0;
+    color: #888;
+    font-size: 1rem;
+}
+
+/* DARK MODE */
+body.dark-mode {
+    background: #181824;
+    color: #f7f7f7;
+}
+body.dark-mode header {
+    background: none;
+}
+body.dark-mode .subtitle {
+    color: #b0b0b0;
+}
+body.dark-mode section {
+    background: #23233a;
+    color: #f7f7f7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+}
+body.dark-mode h2 {
+    color: #e0e0e0;
+}
+body.dark-mode footer {
+    color: #aaa;
+}
+
+/* dark-mode: force all text (fonts/icons) to sky blue */
+body.dark-mode,
+body.dark-mode * {
+  color: #87CEEB !important; /* sky blue */
+}
+
+/* keep backgrounds and borders as defined earlier */
+body.dark-mode input,
+body.dark-mode textarea {
+  color: #87CEEB !important;
+}
+
+/* dark-mode: make FAQ and Works tiles a darker blue for better contrast */
+body.dark-mode .faq-item {
+  background: #0d3c7a; /* darker blue tile */
+  border-color: rgba(255,255,255,0.04);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45);
+}
+body.dark-mode .faq-item .faq-q,
+body.dark-mode .faq-item .faq-a {
+  color: #e6f7ff !important; /* readable light text for answers/questions */
+}
+
+/* Ensure Works card tiles use the #0d3c7a color in dark mode (override inline styles) */
+body.dark-mode .work-item,
+body.dark-mode .works-list .work-item,
+body.dark-mode #works-card .work-item {
+  background: #0d3c7a !important;
+  color: #e6f7ff !important;
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.40);
+}
+body.dark-mode .work-item:hover,
+body.dark-mode .works-list .work-item:hover,
+body.dark-mode #works-card .work-item:hover {
+  background: #0f4f8a !important;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 600px) {
+    main {
+        padding: 1rem 0.5rem;
+    }
+    section {
+        padding: 1rem;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+}
